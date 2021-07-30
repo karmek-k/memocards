@@ -3,10 +3,12 @@ import { Router } from 'express';
 import { getRepository } from 'typeorm';
 import { User } from '../models/User';
 import jwt from 'jsonwebtoken';
+import validate from '../validation/middleware';
+import { userValidator } from '../validation/validators';
 
 const router = Router();
 
-router.post('/', async (req, res) => {
+router.post('/', validate(userValidator), async (req, res) => {
   const user = new User();
   user.username = req.body.username;
   user.password = await argon2.hash(req.body.password);
@@ -16,7 +18,7 @@ router.post('/', async (req, res) => {
   return res.status(201).send({ username: user.username });
 });
 
-router.post('/token', async (req, res) => {
+router.post('/token', validate(userValidator), async (req, res) => {
   const user = await getRepository(User).findOne({
     where: { username: req.body.username }
   });
