@@ -13,7 +13,13 @@ router.post('/', validate(userValidator), async (req, res) => {
   user.username = req.body.username;
   user.password = await argon2.hash(req.body.password);
 
-  await getRepository(User).save(user);
+  const repo = getRepository(User);
+
+  if (await repo.findOne({ where: { username: user.username } })) {
+    return res.status(409).send();
+  }
+
+  await repo.save(user);
 
   return res.status(201).send({ username: user.username });
 });
