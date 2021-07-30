@@ -12,6 +12,6 @@ export class Card {
   @Column('text')
   back!: string;
 
-  @ManyToOne(() => Deck, deck => deck.cards)
+  @ManyToOne(() => Deck, deck => deck.cards, { cascade: true })
   deck!: Deck;
 }
