@@ -1,5 +1,12 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn
+} from 'typeorm';
 import { Card } from './Card';
+import { User } from './User';
 
 @Entity()
 export class Deck {
@@ -11,4 +18,7 @@ export class Deck {
 
   @OneToMany(() => Card, card => card.deck)
   cards!: Card[];
+
+  @ManyToMany(() => User)
+  users!: User[];
 }
