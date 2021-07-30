@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Deck } from './Deck';
 
 @Entity()
 export class Card {
@@ -10,4 +11,7 @@ export class Card {
 
   @Column('text')
   back!: string;
+
+  @ManyToOne(() => Deck, deck => deck.cards)
+  deck!: Deck;
 }
