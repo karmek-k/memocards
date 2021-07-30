@@ -16,6 +16,9 @@ export class Deck {
   @Column()
   name!: string;
 
+  @Column('text', { nullable: true })
+  description!: string;
+
   @OneToMany(() => Card, card => card.deck)
   cards!: Card[];
 
