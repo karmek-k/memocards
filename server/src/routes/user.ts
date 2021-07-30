@@ -39,7 +39,8 @@ router.post('/token', validate(userValidator), async (req, res) => {
     return res.status(401).send();
   }
 
-  const token = jwt.sign({ username: user.username }, secret, {
+  const payload = { userId: user.id, username: user.username };
+  const token = jwt.sign(payload, secret, {
     expiresIn: '1d'
   });
 
