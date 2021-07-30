@@ -5,6 +5,7 @@ import { User } from '../models/User';
 import jwt from 'jsonwebtoken';
 import validate from '../validation/middleware';
 import { userValidator } from '../validation/validators';
+import auth from '../middleware/auth';
 
 const router = Router();
 
@@ -45,6 +46,12 @@ router.post('/token', validate(userValidator), async (req, res) => {
   });
 
   return res.send({ token });
+});
+
+router.get('/', auth, async (req, res) => {
+  const { username, decks } = req.user! as User;
+
+  return res.send({ username, decks: decks ?? [] });
 });
 
 export default router;
