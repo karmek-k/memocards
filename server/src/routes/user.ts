@@ -22,7 +22,10 @@ router.post('/', validate(userValidator), async (req, res) => {
 
   await repo.save(user);
 
-  return res.status(201).send({ username: user.username });
+  return res.status(201).send({
+    id: user.id,
+    username: user.username
+  });
 });
 
 router.post('/token', validate(userValidator), async (req, res) => {
@@ -49,9 +52,9 @@ router.post('/token', validate(userValidator), async (req, res) => {
 });
 
 router.get('/', auth, async (req, res) => {
-  const { username, decks } = req.user! as User;
+  const { username, id } = req.user! as User;
 
-  return res.send({ username, decks: decks ?? [] });
+  return res.send({ id, username });
 });
 
 export default router;
