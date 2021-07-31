@@ -49,4 +49,16 @@ router.post('/', auth, async (req, res) => {
   return res.status(201).send(savedDeck);
 });
 
+router.get('/:id/cards', auth, async (req, res) => {
+  const deck = await getRepository(Deck).findOne(req.params.id, {
+    relations: ['cards']
+  });
+
+  if (!deck) {
+    return res.status(404).send();
+  }
+
+  return res.send(deck.cards);
+});
+
 export default router;
