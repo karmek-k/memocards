@@ -1,7 +1,6 @@
 import {
   Column,
   Entity,
-  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn
@@ -22,9 +21,6 @@ export class Deck {
 
   @OneToMany(() => Card, card => card.deck)
   cards!: Card[];
-
-  @ManyToMany(() => User)
-  users!: User[];
 
   @ManyToOne(() => User, { cascade: true })
   author!: User;

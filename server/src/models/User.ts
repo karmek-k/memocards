@@ -2,7 +2,7 @@ import {
   Column,
   Entity,
   JoinTable,
-  ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn
 } from 'typeorm';
 import { Deck } from './Deck';
@@ -18,7 +18,7 @@ export class User {
   @Column()
   password!: string;
 
-  @ManyToMany(() => Deck)
+  @OneToMany(() => Deck, deck => deck.author)
   @JoinTable()
   decks!: Deck[];
 }
