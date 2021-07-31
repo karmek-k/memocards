@@ -34,19 +34,30 @@ router.post('/', auth, async (req, res) => {
   const { id } = req.user! as User;
 
   const user = (await getRepository(User).findOne(id, {
-    relations: ['decks']
+    select: ['username', 'id']
   })) as User;
 
   const deck = new Deck();
   deck.name = req.body.name;
   deck.description = req.body?.description;
+  deck.author = user;
 
-  const savedDeck = await getRepository(Deck).save(deck);
-
-  user.decks.push(savedDeck);
+  await getRepository(Deck).save(deck);
   await getRepository(User).save(user);
 
-  return res.status(201).send(savedDeck);
+  return res.status(201).send(deck);
+});
+
+router.get('/:id/cards', auth, async (req, res) => {
+  const deck = await getRepository(Deck).findOne(req.params.id, {
+    relations: ['cards']
+  });
+
+  if (!deck) {
+    return res.status(404).send();
+  }
+
+  return res.send(deck.cards);
 });
 
 export default router;

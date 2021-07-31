@@ -1,7 +1,7 @@
 import {
   Column,
   Entity,
-  ManyToMany,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn
 } from 'typeorm';
@@ -22,6 +22,9 @@ export class Deck {
   @OneToMany(() => Card, card => card.deck)
   cards!: Card[];
 
-  @ManyToMany(() => User, { cascade: true })
-  users!: User[];
+  @ManyToOne(() => User, { cascade: true })
+  author!: User;
+
+  @Column({ default: true })
+  private!: boolean;
 }
