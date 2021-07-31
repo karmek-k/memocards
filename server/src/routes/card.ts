@@ -29,6 +29,7 @@ router.post('/', auth, async (req, res) => {
 
   deck.cards.push(card);
 
+  await getRepository(Card).save(card);
   await getRepository(Deck).save(deck);
 
   return res.status(201).send(card);
