@@ -8,6 +8,7 @@ import dbConfig from './config/db';
 import passport from 'passport';
 import jwtStrategy from './config/jwtStrategy';
 import UserRouter from './routes/user';
+import DeckRouter from './routes/deck';
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -19,6 +20,7 @@ passport.use(jwtStrategy);
 
 // Routes
 app.use('/user', UserRouter);
+app.use('/deck', DeckRouter);
 
 createConnection(dbConfig)
   .then(() => {
