@@ -22,6 +22,6 @@ export class Deck {
   @OneToMany(() => Card, card => card.deck)
   cards!: Card[];
 
-  @ManyToMany(() => User)
+  @ManyToMany(() => User, { cascade: true })
   users!: User[];
 }
