@@ -33,9 +33,7 @@ router.get('/', auth, async (req, res) => {
 router.post('/', auth, async (req, res) => {
   const { id } = req.user! as User;
 
-  const user = (await getRepository(User).findOne(id, {
-    select: ['username', 'id']
-  })) as User;
+  const user = (await getRepository(User).findOne(id)) as User;
 
   const deck = new Deck();
   deck.name = req.body.name;
