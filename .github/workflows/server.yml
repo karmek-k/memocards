@@ -10,11 +10,14 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./server
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with: 
           node_version: '14'
-      - run: cd server
+      - run: 'echo JWT_SECRET=actions > .env' 
       - run: yarn install --frozen-lockfile
       - run: yarn test
