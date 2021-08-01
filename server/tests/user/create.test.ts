@@ -1,25 +1,11 @@
-import { createConnection, getConnection } from 'typeorm';
 import request from 'supertest';
 import app from '../../src/server';
-import { User } from '../../src/models/User';
-import { Deck } from '../../src/models/Deck';
-import { Card } from '../../src/models/Card';
+import { afterEachHandler, beforeEachHandler } from '../functions';
 
 describe('User creation tests', () => {
-  beforeEach(async () => {
-    await createConnection({
-      type: 'sqlite',
-      database: ':memory:',
-      // entities: ['../src/models/*.ts'],
-      entities: [User, Deck, Card],
-      synchronize: true,
-      dropSchema: true
-    });
-  });
+  beforeEach(beforeEachHandler);
 
-  afterEach(async () => {
-    await getConnection().close();
-  });
+  afterEach(afterEachHandler);
 
   it('should create a user with valid credentials', async () => {
     const res = await request(app).post('/user').send({
