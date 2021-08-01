@@ -2,7 +2,7 @@ import request from 'supertest';
 import app from '../../src/server';
 import { afterEachHandler, beforeEachHandler } from '../functions';
 
-describe('User creation tests', () => {
+describe('User info tests', () => {
   let jwt: string;
   const creds = {
     username: 'tester',
