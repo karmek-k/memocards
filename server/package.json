@@ -40,11 +40,5 @@
     "watch-compile": "tsc -w",
     "dev": "concurrently \"yarn:watch-*\"",
     "test": "jest"
-  },
-  "jest": {
-    "testEnvironment": "node",
-    "coveragePathIgnorePatterns": [
-      "/node_modules/"
-    ]
   }
 }
