@@ -2,7 +2,7 @@
   "name": "memocards-server",
   "version": "1.0.0",
   "description": "Backend for memocards",
-  "main": "dist/index.js",
+  "main": "dist/src/index.js",
   "repository": "https://github.com/karmek-k/memocards",
   "author": "Bartosz Gleń",
   "license": "AGPL-3.0-only",
