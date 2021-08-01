@@ -41,7 +41,6 @@ router.post('/', auth, async (req, res) => {
   deck.author = user;
 
   await getRepository(Deck).save(deck);
-  await getRepository(User).save(user);
 
   return res.status(201).send(deck);
 });
