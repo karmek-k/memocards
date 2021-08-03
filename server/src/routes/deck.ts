@@ -20,6 +20,15 @@ router.get('/:id', async (req, res) => {
     return res.status(404).send();
   }
 
+  let notYours = true;
+  if (req.user) {
+    notYours = (req.user as User).id !== deck.author.id;
+  }
+
+  if (deck.private && notYours) {
+    return res.status(403).send();
+  }
+
   return res.send(deck);
 });
 
@@ -39,6 +48,7 @@ router.post('/', auth, async (req, res) => {
   deck.name = req.body.name;
   deck.description = req.body?.description;
   deck.author = user;
+  deck.private = req.body?.private;
 
   await getRepository(Deck).save(deck);
 

@@ -68,7 +68,7 @@ describe('Deck retrieval by id tests', () => {
     const otherDeckRes = await request(app)
       .post('/deck')
       .auth(otherJwtRes.body.token, { type: 'bearer' })
-      .send({ name: 'xd', public: true });
+      .send({ name: 'xd', private: false });
 
     const res = await request(app)
       .get(`/deck/${otherDeckRes.body.id}`)
