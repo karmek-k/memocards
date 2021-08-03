@@ -40,6 +40,6 @@
     "compile": "tsc",
     "watch-compile": "tsc -w",
     "dev": "concurrently \"yarn:watch-*\"",
-    "test": "jest --testTimeout 10000"
+    "test": "jest"
   }
 }
