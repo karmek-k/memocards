@@ -31,7 +31,7 @@ router.post('/', validate(userValidator), async (req, res) => {
 router.post('/token', validate(userValidator), async (req, res) => {
   const user = await getRepository(User).findOne({
     where: { username: req.body.username },
-    select: ['password']
+    select: ['password', 'id', 'username']
   });
 
   if (!user) {
