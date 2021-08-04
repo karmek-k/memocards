@@ -3,21 +3,27 @@ import { getRepository } from 'typeorm';
 import auth from '../middleware/auth';
 import { Deck } from '../models/Deck';
 import { User } from '../models/User';
+import validate from '../validation/middleware';
+import { deckValidator } from '../validation/validators';
 
 const router = Router();
 
 router.get('/:id', async (req, res) => {
-  const repo = getRepository(Deck);
-  let deck;
-
-  try {
-    deck = await repo.findOne(req.params.id);
-  } catch (e) {
-    return res.status(400).send();
-  }
+  let deck = await getRepository(Deck).findOne(req.params.id, {
+    relations: ['author']
+  });
 
   if (!deck) {
     return res.status(404).send();
+  }
+
+  let notYours = true;
+  if (req.user) {
+    notYours = (req.user as User).id !== deck.author.id;
+  }
+
+  if (deck.private && notYours) {
+    return res.status(403).send();
   }
 
   return res.send(deck);
@@ -30,20 +36,18 @@ router.get('/', auth, async (req, res) => {
   return res.send(user!.decks);
 });
 
-router.post('/', auth, async (req, res) => {
+router.post('/', auth, validate(deckValidator), async (req, res) => {
   const { id } = req.user! as User;
 
-  const user = (await getRepository(User).findOne(id, {
-    select: ['username', 'id']
-  })) as User;
+  const user = (await getRepository(User).findOne(id)) as User;
 
   const deck = new Deck();
   deck.name = req.body.name;
   deck.description = req.body?.description;
   deck.author = user;
+  deck.private = req.body?.private;
 
   await getRepository(Deck).save(deck);
-  await getRepository(User).save(user);
 
   return res.status(201).send(deck);
 });
