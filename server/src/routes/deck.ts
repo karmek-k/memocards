@@ -11,7 +11,7 @@ router.get('/:id', async (req, res) => {
   let deck;
 
   try {
-    deck = await repo.findOne(req.params.id);
+    deck = await repo.findOne(req.params.id, { relations: ['author'] });
   } catch (e) {
     return res.status(400).send();
   }
