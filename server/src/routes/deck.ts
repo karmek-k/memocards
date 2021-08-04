@@ -3,6 +3,8 @@ import { getRepository } from 'typeorm';
 import auth from '../middleware/auth';
 import { Deck } from '../models/Deck';
 import { User } from '../models/User';
+import validate from '../validation/middleware';
+import { deckValidator } from '../validation/validators';
 
 const router = Router();
 
@@ -34,7 +36,7 @@ router.get('/', auth, async (req, res) => {
   return res.send(user!.decks);
 });
 
-router.post('/', auth, async (req, res) => {
+router.post('/', auth, validate(deckValidator), async (req, res) => {
   const { id } = req.user! as User;
 
   const user = (await getRepository(User).findOne(id)) as User;
