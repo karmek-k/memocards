@@ -27,6 +27,22 @@ describe('Deck retrieval by id tests', () => {
     expect(res.statusCode).toBe(404);
   });
 
+  it("should return 200 while fetching one's own private deck", async () => {
+    const createRes = await request(app)
+      .post('/deck')
+      .auth(jwt, { type: 'bearer' })
+      .send({ name: 'Test deck', private: true });
+    console.log(createRes.body);
+
+    const res = await request(app)
+      .get(`/deck/${createRes.body.id}`)
+      .auth(jwt, { type: 'bearer' })
+      .send();
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toHaveProperty('name');
+  });
+
   it('should return 404 at an SQL injection attempt', async () => {
     const res = await request(app)
       .get("/deck/' OR 1=1; -- ")
