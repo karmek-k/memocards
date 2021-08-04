@@ -32,7 +32,6 @@ describe('Deck retrieval by id tests', () => {
       .post('/deck')
       .auth(jwt, { type: 'bearer' })
       .send({ name: 'Test deck', private: true });
-    console.log(createRes.body);
 
     const res = await request(app)
       .get(`/deck/${createRes.body.id}`)
