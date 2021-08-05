@@ -4,10 +4,12 @@ import auth from '../middleware/auth';
 import { Card } from '../models/Card';
 import { Deck } from '../models/Deck';
 import { User } from '../models/User';
+import validate from '../validation/middleware';
+import { cardValidator } from '../validation/validators';
 
 const router = Router();
 
-router.post('/', auth, async (req, res) => {
+router.post('/', auth, validate(cardValidator), async (req, res) => {
   const { deckId, front, back } = req.body;
   const user = req.user! as User;
 
