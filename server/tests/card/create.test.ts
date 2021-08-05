@@ -52,4 +52,35 @@ describe('Card creation tests', () => {
     expect(res2.statusCode).toBe(200);
     expect(res2.body).toContainEqual(expectedCard);
   });
+
+  it('should return 404 while adding a card to non-existent deck', async () => {
+    const res = await request(app)
+      .post('/card')
+      .auth(jwt, { type: 'bearer' })
+      .send({ deckId: deck.id + 1, front: 'テスト', back: 'test' });
+
+    expect(res.statusCode).toBe(404);
+  });
+
+  it("should return 403 while adding a card to someone else's deck", async () => {
+    // creating a new user & deck
+    const otherCreds = { username: 'developer', password: '12345' };
+    await request(app).post('/user').send(otherCreds);
+    const { token: otherToken } = await (
+      await request(app).post('/user/token').send(otherCreds)
+    ).body;
+    const { id: otherDeckId } = await (
+      await request(app)
+        .post('/deck')
+        .auth(otherToken, { type: 'bearer' })
+        .send(deckData)
+    ).body;
+
+    const res = await request(app)
+      .post('/card')
+      .auth(jwt, { type: 'bearer' })
+      .send({ deckId: otherDeckId, front: 'テスト', back: 'test' });
+
+    expect(res.statusCode).toBe(403);
+  });
 });
