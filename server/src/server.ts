@@ -12,6 +12,7 @@ import cookieParser from 'cookie-parser';
 import UserRouter from './routes/user';
 import DeckRouter from './routes/deck';
 import CardRouter from './routes/card';
+import helmet from 'helmet';
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(cookieParser());
 passport.use(new AnonymousStrategy());
 passport.use(jwtStrategy);
 app.use(passport.authenticate(['jwt', 'anonymous'], { session: false }));
+app.use(helmet());
 
 if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('dev'));
