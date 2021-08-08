@@ -6,7 +6,7 @@ import {
   Button
 } from '@material-ui/core';
 import React from 'react';
-import { useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 const useStyles = makeStyles({
   paper: {
@@ -25,14 +25,17 @@ const useStyles = makeStyles({
   }
 });
 
+interface Inputs {
+  username: string;
+  password: string;
+}
+
 const LoginForm: React.FC = () => {
   const classes = useStyles();
+  const { handleSubmit, register } = useForm<Inputs>();
 
-  const [username, setUsername] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmit: SubmitHandler<Inputs> = data => {
+    console.log(data);
   };
 
   return (
@@ -40,20 +43,9 @@ const LoginForm: React.FC = () => {
       <Typography variant="h2" className={classes.formHeader}>
         Log in
       </Typography>
-      <form className={classes.form} onSubmit={handleSubmit}>
-        <TextField
-          name="username"
-          label="Username"
-          value={username}
-          onChange={e => setUsername(e.target.value)}
-        />
-        <TextField
-          name="password"
-          type="password"
-          label="Password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-        />
+      <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+        <TextField label="Username" {...register('username')} />
+        <TextField type="password" label="Password" {...register('password')} />
         <Button
           variant="contained"
           color="primary"
