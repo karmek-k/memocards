@@ -34,7 +34,11 @@ interface Inputs {
 
 const LoginForm: React.FC = () => {
   const classes = useStyles();
-  const { handleSubmit, register } = useForm<Inputs>({
+  const {
+    handleSubmit,
+    register,
+    formState: { errors }
+  } = useForm<Inputs>({
     resolver: yupResolver(loginSchema)
   });
 
@@ -48,8 +52,19 @@ const LoginForm: React.FC = () => {
         Log in
       </Typography>
       <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
-        <TextField label="Username" {...register('username')} />
-        <TextField type="password" label="Password" {...register('password')} />
+        <TextField
+          label="Username"
+          error={!!errors.username}
+          helperText={errors.username?.message}
+          {...register('username')}
+        />
+        <TextField
+          type="password"
+          error={!!errors.password}
+          label="Password"
+          helperText={errors.password?.message}
+          {...register('password')}
+        />
         <Button
           variant="contained"
           color="primary"
