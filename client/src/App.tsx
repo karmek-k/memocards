@@ -5,6 +5,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import './styles/global.css';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { theme } from './styles/theme';
+import LoginPage from './pages/LoginPage';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={IndexPage} />
+          <Route path="/login" component={LoginPage} />
           <Route component={NotFoundPage} />
         </Switch>
       </BrowserRouter>
