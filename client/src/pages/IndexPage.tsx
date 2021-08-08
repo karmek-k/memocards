@@ -1,7 +1,8 @@
 import React from 'react';
+import Layout from '../components/shared/Layout';
 
 const IndexPage = () => {
-  return <h1>memocards</h1>;
+  return <Layout></Layout>;
 };
 
 export default IndexPage;
