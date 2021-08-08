@@ -7,8 +7,7 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: '1.75rem'
+    alignItems: 'center'
   },
   text: {
     margin: '1.5rem 0',
