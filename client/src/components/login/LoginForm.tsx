@@ -7,6 +7,8 @@ import {
 } from '@material-ui/core';
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { loginSchema } from '../../schemas/login';
 
 const useStyles = makeStyles({
   paper: {
@@ -32,7 +34,9 @@ interface Inputs {
 
 const LoginForm: React.FC = () => {
   const classes = useStyles();
-  const { handleSubmit, register } = useForm<Inputs>();
+  const { handleSubmit, register } = useForm<Inputs>({
+    resolver: yupResolver(loginSchema)
+  });
 
   const onSubmit: SubmitHandler<Inputs> = data => {
     console.log(data);
