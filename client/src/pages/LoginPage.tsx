@@ -1,15 +1,13 @@
 import { Container } from '@material-ui/core';
 import React from 'react';
+import LoginForm from '../components/login/LoginForm';
 import Layout from '../components/shared/Layout';
 
 const LoginPage: React.FC = () => {
   return (
     <Layout>
       <Container maxWidth="sm">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perspiciatis
-        repellendus excepturi aut architecto aperiam, atque, fugiat dicta ullam
-        libero qui iusto reiciendis corporis corrupti aliquid illum
-        exercitationem quidem adipisci voluptatum!
+        <LoginForm />
       </Container>
     </Layout>
   );
