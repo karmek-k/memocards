@@ -1,14 +1,14 @@
 import { Button, Container, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import Layout from '../components/shared/Layout';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
   container: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: '1.75rem'
+    alignItems: 'center'
   },
   text: {
     margin: '1.5rem 0',
@@ -38,6 +38,8 @@ const IndexPage = () => {
           size="large"
           variant="contained"
           color="primary"
+          component={Link}
+          to="/login"
           className={classes.button}
         >
           Get started
