@@ -6,7 +6,9 @@ import {
   Button
 } from '@material-ui/core';
 import React from 'react';
-import { useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { loginSchema } from '../../schemas/login';
 
 const useStyles = makeStyles({
   paper: {
@@ -25,14 +27,23 @@ const useStyles = makeStyles({
   }
 });
 
+interface Inputs {
+  username: string;
+  password: string;
+}
+
 const LoginForm: React.FC = () => {
   const classes = useStyles();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors }
+  } = useForm<Inputs>({
+    resolver: yupResolver(loginSchema)
+  });
 
-  const [username, setUsername] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmit: SubmitHandler<Inputs> = data => {
+    console.log(data);
   };
 
   return (
@@ -40,19 +51,19 @@ const LoginForm: React.FC = () => {
       <Typography variant="h2" className={classes.formHeader}>
         Log in
       </Typography>
-      <form className={classes.form} onSubmit={handleSubmit}>
+      <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
         <TextField
-          name="username"
           label="Username"
-          value={username}
-          onChange={e => setUsername(e.target.value)}
+          error={!!errors.username}
+          helperText={errors.username?.message}
+          {...register('username')}
         />
         <TextField
-          name="password"
           type="password"
+          error={!!errors.password}
           label="Password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
+          helperText={errors.password?.message}
+          {...register('password')}
         />
         <Button
           variant="contained"
