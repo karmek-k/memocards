@@ -3,7 +3,8 @@ import {
   Paper,
   Typography,
   TextField,
-  Button
+  Button,
+  LinearProgress
 } from '@material-ui/core';
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -14,7 +15,7 @@ const useStyles = makeStyles({
   paper: {
     padding: '2rem'
   },
-  formHeader: {
+  centerText: {
     textAlign: 'center'
   },
   form: {
@@ -22,7 +23,7 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     justifyContent: 'space-between'
   },
-  button: {
+  marginTop: {
     marginTop: '1.5rem'
   }
 });
@@ -34,9 +35,11 @@ export interface LoginInputs {
 
 interface Props {
   setInputsCallback: React.Dispatch<React.SetStateAction<LoginInputs>>;
+  loggingIn: boolean;
+  error: boolean;
 }
 
-const LoginForm: React.FC<Props> = ({ setInputsCallback }) => {
+const LoginForm: React.FC<Props> = props => {
   const classes = useStyles();
   const {
     handleSubmit,
@@ -46,13 +49,22 @@ const LoginForm: React.FC<Props> = ({ setInputsCallback }) => {
     resolver: yupResolver(loginSchema)
   });
 
-  const onSubmit: SubmitHandler<LoginInputs> = setInputsCallback;
+  const onSubmit: SubmitHandler<LoginInputs> = props.setInputsCallback;
 
   return (
     <Paper className={classes.paper}>
-      <Typography variant="h2" className={classes.formHeader}>
+      <Typography variant="h2" className={classes.centerText}>
         Log in
       </Typography>
+      {props.error && (
+        <Typography
+          variant="body1"
+          color="error"
+          className={classes.centerText}
+        >
+          There was an error while logging in. Please check your credentials.
+        </Typography>
+      )}
       <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
         <TextField
           label="Username"
@@ -71,11 +83,13 @@ const LoginForm: React.FC<Props> = ({ setInputsCallback }) => {
           variant="contained"
           color="primary"
           type="submit"
-          className={classes.button}
+          disabled={props.loggingIn}
+          className={classes.marginTop}
         >
           Submit
         </Button>
       </form>
+      {props.loggingIn && <LinearProgress className={classes.marginTop} />}
     </Paper>
   );
 };
