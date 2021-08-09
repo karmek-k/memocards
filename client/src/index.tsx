@@ -5,17 +5,21 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { theme } from './styles/theme';
+import { Provider as ReduxProvider } from 'react-redux';
+import store from './redux/store';
 
 const queryClient = new QueryClient();
 
 ReactDOM.render(
-  <QueryClientProvider client={queryClient}>
-    <ThemeProvider theme={theme}>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    </ThemeProvider>
-  </QueryClientProvider>,
+  <ReduxProvider store={store}>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      </ThemeProvider>
+    </QueryClientProvider>
+  </ReduxProvider>,
   document.getElementById('root')
 );
 
