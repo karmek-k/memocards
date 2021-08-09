@@ -13,7 +13,7 @@ const login = (inputs: LoginInputs): Promise<string> => {
         password: inputs.password
       })
       .then(res => resolve(res.data.token))
-      .catch(() => reject());
+      .catch(reject);
   });
 };
 
