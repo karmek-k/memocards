@@ -6,11 +6,14 @@ const getCsrfToken = async () => {
 };
 
 const useCsrfToken = () => {
-  const { isError, isSuccess } = useQuery<void>('csrfToken', getCsrfToken);
+  const { isError, isSuccess } = useQuery<void>('csrfToken', getCsrfToken, {
+    retry: false,
+    refetchOnWindowFocus: false
+  });
 
   return new Promise<boolean>((resolve, reject) => {
     if (isError) {
-      return reject(false);
+      return reject('Could not fetch the CSRF token');
     }
 
     if (isSuccess) {
