@@ -27,24 +27,26 @@ const useStyles = makeStyles({
   }
 });
 
-interface Inputs {
+export interface LoginInputs {
   username: string;
   password: string;
 }
 
-const LoginForm: React.FC = () => {
+interface Props {
+  setInputsCallback: React.Dispatch<React.SetStateAction<LoginInputs>>;
+}
+
+const LoginForm: React.FC<Props> = ({ setInputsCallback }) => {
   const classes = useStyles();
   const {
     handleSubmit,
     register,
     formState: { errors }
-  } = useForm<Inputs>({
+  } = useForm<LoginInputs>({
     resolver: yupResolver(loginSchema)
   });
 
-  const onSubmit: SubmitHandler<Inputs> = data => {
-    console.log(data);
-  };
+  const onSubmit: SubmitHandler<LoginInputs> = setInputsCallback;
 
   return (
     <Paper className={classes.paper}>
