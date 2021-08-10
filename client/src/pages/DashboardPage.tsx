@@ -6,7 +6,9 @@ import {
   Typography
 } from '@material-ui/core';
 import React from 'react';
+import DeckAccordion from '../components/dashboard/DeckAccordion';
 import Layout from '../components/shared/Layout';
+import Deck from '../interfaces/Deck';
 
 const useStyles = makeStyles({
   centeredText: {
@@ -23,6 +25,13 @@ const useStyles = makeStyles({
     lineHeight: '2rem'
   }
 });
+
+const mockDeck: Deck = {
+  id: 1,
+  name: 'Mock Deck',
+  description: 'Example description',
+  private: true
+};
 
 const DashboardPage = () => {
   const classes = useStyles();
@@ -57,6 +66,7 @@ const DashboardPage = () => {
               <Typography variant="h3" className={classes.centeredText}>
                 Decks
               </Typography>
+              <DeckAccordion decks={[mockDeck]} />
             </Paper>
           </Grid>
         </Grid>
