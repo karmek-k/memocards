@@ -5,6 +5,8 @@ import NotFoundPage from './pages/NotFoundPage';
 import './styles/global.css';
 import LoginPage from './pages/LoginPage';
 import useCsrfToken from './hooks/useCsrfToken';
+import ProtectedRoute from './components/router/ProtectedRoute';
+import DashboardPage from './pages/DashboardPage';
 
 function App() {
   useCsrfToken();
@@ -14,6 +16,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={IndexPage} />
         <Route path="/login" component={LoginPage} />
+        <ProtectedRoute path="/dashboard" component={DashboardPage} />
         <Route component={NotFoundPage} />
       </Switch>
     </BrowserRouter>
