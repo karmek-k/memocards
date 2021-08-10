@@ -4,6 +4,7 @@ import {
   AccordionSummary,
   Typography
 } from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import React from 'react';
 import Deck from '../../interfaces/Deck';
 
@@ -15,7 +16,7 @@ const DeckItem: React.FC<Props> = ({ deck }) => {
   return (
     <Accordion>
       <AccordionSummary
-        // expandIcon={<ExpandMoreIcon />}
+        expandIcon={<ExpandMoreIcon />}
         aria-controls={`deck-${deck.id}`}
         id={`deck-${deck.id}`}
       >
