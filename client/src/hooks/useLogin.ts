@@ -18,7 +18,8 @@ const useLogin = (inputs: LoginInputs) => {
     setError(false);
     login(inputs)
       .then(jwt => dispatch(userSlice.login(jwt)))
-      .catch(() => setError(true));
+      .catch(() => setError(true))
+      .finally(() => setLoggingIn(false));
 
     return () => setLoggingIn(false);
   }, [inputs, dispatch]);
