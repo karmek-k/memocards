@@ -1,7 +1,7 @@
-import { useAppSelector } from './redux';
+import useJwt from './useJwt';
 
 const useLoggedIn = () => {
-  return useAppSelector(state => state.user.token) !== null;
+  return useJwt() !== null;
 };
 
 export default useLoggedIn;

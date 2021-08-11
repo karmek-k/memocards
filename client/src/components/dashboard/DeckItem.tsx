@@ -24,7 +24,7 @@ const DeckItem: React.FC<Props> = ({ deck }) => {
       </AccordionSummary>
       <AccordionDetails>
         <Typography>
-          {deck.description && <i>No description given.</i>}
+          {deck.description ?? <i>No description given.</i>}
         </Typography>
       </AccordionDetails>
     </Accordion>
