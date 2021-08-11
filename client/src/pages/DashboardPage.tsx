@@ -1,4 +1,5 @@
 import {
+  CircularProgress,
   Container,
   Grid,
   makeStyles,
@@ -60,7 +61,7 @@ const DashboardPage = () => {
               <Typography variant="h3" className={classes.centeredText}>
                 Decks
               </Typography>
-              <DeckAccordion decks={decks} />
+              {!decks ? <CircularProgress /> : <DeckAccordion decks={decks} />}
             </Paper>
           </Grid>
         </Grid>
