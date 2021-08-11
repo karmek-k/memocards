@@ -8,7 +8,7 @@ import {
 import React from 'react';
 import DeckAccordion from '../components/dashboard/DeckAccordion';
 import Layout from '../components/shared/Layout';
-import Deck from '../interfaces/Deck';
+import useDecks from '../hooks/resources/useDecks';
 
 const useStyles = makeStyles({
   centeredText: {
@@ -26,15 +26,9 @@ const useStyles = makeStyles({
   }
 });
 
-const mockDeck: Deck = {
-  id: 1,
-  name: 'Mock Deck',
-  description: 'Example description',
-  private: true
-};
-
 const DashboardPage = () => {
   const classes = useStyles();
+  const decks = useDecks();
 
   return (
     <Layout>
@@ -66,7 +60,7 @@ const DashboardPage = () => {
               <Typography variant="h3" className={classes.centeredText}>
                 Decks
               </Typography>
-              <DeckAccordion decks={[mockDeck]} />
+              <DeckAccordion decks={decks} />
             </Paper>
           </Grid>
         </Grid>
