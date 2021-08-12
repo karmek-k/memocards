@@ -1,4 +1,9 @@
-import { CircularProgress } from '@material-ui/core';
+import {
+  CircularProgress,
+  Container,
+  makeStyles,
+  Typography
+} from '@material-ui/core';
 import React from 'react';
 import { useParams } from 'react-router';
 import Layout from '../components/shared/Layout';
@@ -8,7 +13,15 @@ interface Params {
   deckId: string;
 }
 
+const useStyles = makeStyles({
+  textCentered: {
+    textAlign: 'center'
+  }
+});
+
 const DeckOverviewPage: React.FC = () => {
+  const classes = useStyles();
+
   const { deckId } = useParams<Params>();
   const deck = useDeck(Number.parseInt(deckId));
 
@@ -22,7 +35,12 @@ const DeckOverviewPage: React.FC = () => {
 
   return (
     <Layout>
-      <p>{Object.keys(deck)}</p>
+      <Container className={classes.textCentered}>
+        <Typography variant="h3">{deck.name}</Typography>
+        <Typography variant="subtitle1">
+          Created by {deck.author?.username ?? 'Unknown User'}
+        </Typography>
+      </Container>
     </Layout>
   );
 };
