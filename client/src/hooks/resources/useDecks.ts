@@ -1,24 +1,13 @@
-import Deck from '../../interfaces/Deck';
-import axios from 'axios';
 import { useQuery } from 'react-query';
 import useJwt from '../useJwt';
-
-const getDecks = (jwt: string) => {
-  return () => {
-    return axios
-      .get<Deck[]>('/deck', {
-        headers: {
-          Authorization: `Bearer ${jwt}`
-        }
-      })
-      .then(res => res.data);
-  };
-};
+import { getRequestFactory } from '../../functions/requestFactories';
+import Deck from '../../interfaces/Deck';
 
 const useDecks = () => {
-  const jwt = useJwt() ?? '';
-
-  const { data, isError, isLoading } = useQuery('decks', getDecks(jwt));
+  const { data, isError, isLoading } = useQuery(
+    'decks',
+    getRequestFactory<Deck[]>('/deck', useJwt())
+  );
 
   if (isLoading) {
     return null;
