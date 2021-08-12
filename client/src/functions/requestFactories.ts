@@ -1,13 +1,13 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 
-export function getRequestFactory<T>(url: string, jwt?: string) {
+export function getRequestFactory<T>(url: string, jwt: string | null) {
   return async () => {
-    const config: AxiosRequestConfig = {};
-    if (jwt) {
-      config.headers.Authorization = `Bearer ${jwt}`;
-    }
+    const { data } = await axios.get<T>(url, {
+      headers: {
+        Authorization: `Bearer ${jwt}`
+      }
+    });
 
-    const res = await axios.get<T>(url, config);
-    return res.data;
+    return data;
   };
 }
