@@ -7,6 +7,7 @@ import LoginPage from './pages/LoginPage';
 import useCsrfToken from './hooks/useCsrfToken';
 import ProtectedRoute from './components/router/ProtectedRoute';
 import DashboardPage from './pages/DashboardPage';
+import DeckOverviewPage from './pages/DeckOverviewPage';
 
 function App() {
   useCsrfToken();
@@ -17,6 +18,7 @@ function App() {
         <Route exact path="/" component={IndexPage} />
         <Route path="/login" component={LoginPage} />
         <ProtectedRoute path="/dashboard" component={DashboardPage} />
+        <ProtectedRoute path="/deck/:deckId" component={DeckOverviewPage} />
         <Route component={NotFoundPage} />
       </Switch>
     </BrowserRouter>

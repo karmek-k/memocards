@@ -1,12 +1,12 @@
 import { useQuery } from 'react-query';
-import useJwt from '../useJwt';
 import { getRequestFactory } from '../../functions/requestFactories';
 import Deck from '../../interfaces/Deck';
+import useJwt from '../useJwt';
 
-const useDecks = () => {
+const useDeck = (deckId: number) => {
   const { data, isError, isLoading } = useQuery(
-    'decks',
-    getRequestFactory<Deck[]>('/deck', useJwt())
+    ['deck', deckId],
+    getRequestFactory<Deck>(`/deck/${deckId}`, useJwt())
   );
 
   if (isLoading) {
@@ -17,7 +17,7 @@ const useDecks = () => {
     throw new Error();
   }
 
-  return data ?? [];
+  return data;
 };
 
-export default useDecks;
+export default useDeck;
