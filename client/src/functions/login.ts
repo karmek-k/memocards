@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { LoginInputs } from '../components/login/LoginForm';
+import api from './api';
 
 interface TokenResponse {
   token: string;
@@ -7,7 +7,7 @@ interface TokenResponse {
 
 const login = (inputs: LoginInputs): Promise<string> => {
   return new Promise<string>((resolve, reject) => {
-    axios
+    api
       .post<TokenResponse>('/user/token', {
         username: inputs.username,
         password: inputs.password

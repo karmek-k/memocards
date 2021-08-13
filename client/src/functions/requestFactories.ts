@@ -1,8 +1,8 @@
-import axios from 'axios';
+import api from './api';
 
 export function getRequestFactory<T>(url: string, jwt: string | null) {
   return async () => {
-    const { data } = await axios.get<T>(url, {
+    const { data } = await api.get<T>(url, {
       headers: {
         Authorization: `Bearer ${jwt}`
       }
