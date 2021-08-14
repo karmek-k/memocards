@@ -9,7 +9,7 @@ import {
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { loginSchema } from '../../schemas/login';
+import { userSchema } from '../../schemas/user';
 
 const useStyles = makeStyles({
   paper: {
@@ -46,7 +46,7 @@ const LoginForm: React.FC<Props> = props => {
     register,
     formState: { errors }
   } = useForm<LoginInputs>({
-    resolver: yupResolver(loginSchema)
+    resolver: yupResolver(userSchema)
   });
 
   const onSubmit: SubmitHandler<LoginInputs> = props.setInputsCallback;
