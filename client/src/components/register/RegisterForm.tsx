@@ -4,8 +4,10 @@ import {
   LinearProgress,
   Paper,
   TextField,
-  Typography
+  Typography,
+  Link
 } from '@material-ui/core';
+import { Link as RouterLink } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { userSchema } from '../../schemas/user';
 import useStyles from '../shared/styles/form';
@@ -67,6 +69,12 @@ const RegisterForm: React.FC<Props> = props => {
           Submit
         </Button>
       </form>
+      <Typography className={classes.centerText + ' ' + classes.marginTop}>
+        Already have an account?{' '}
+        <Link component={RouterLink} to="/login">
+          Log in instead.
+        </Link>
+      </Typography>
       {/* {props.loggingIn && <LinearProgress className={classes.marginTop} />} */}
     </Paper>
   );
