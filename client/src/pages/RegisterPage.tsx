@@ -2,6 +2,7 @@ import { Container } from '@material-ui/core';
 import React from 'react';
 import { useState } from 'react';
 import { Redirect } from 'react-router-dom';
+import RegisteredNotice from '../components/register/RegisteredNotice';
 import RegisterForm, {
   RegisterInputs
 } from '../components/register/RegisterForm';
@@ -19,7 +20,11 @@ const RegisterPage: React.FC = () => {
   const { done, error, registering } = useRegister(inputs);
 
   if (done) {
-    return <p>Registered successfully</p>;
+    return (
+      <Layout>
+        <RegisteredNotice />
+      </Layout>
+    );
   }
 
   if (loggedIn) {
