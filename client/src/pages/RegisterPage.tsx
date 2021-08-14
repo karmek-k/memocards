@@ -2,6 +2,7 @@ import { Container } from '@material-ui/core';
 import React from 'react';
 // import { useState } from 'react';
 import { Redirect } from 'react-router-dom';
+import RegisterForm from '../components/register/RegisterForm';
 import Layout from '../components/shared/Layout';
 import useLoggedIn from '../hooks/useLoggedIn';
 
@@ -20,7 +21,7 @@ const RegisterPage: React.FC = () => {
   return (
     <Layout>
       <Container maxWidth="sm">
-        <p>a</p>
+        <RegisterForm />
       </Container>
     </Layout>
   );
