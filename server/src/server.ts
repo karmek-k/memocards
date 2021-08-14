@@ -34,18 +34,20 @@ app.use(helmet());
 
 if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('dev'));
-  app.use(
-    csurf({
-      cookie: {
-        httpOnly: true
-      }
-    })
-  );
 
-  app.get('/csrf-token', (req, res) => {
-    res.cookie('XSRF-TOKEN', req.csrfToken());
-    return res.send();
-  });
+  console.warn('TODO: bring back CSRF protection before deploying');
+  // app.use(
+  //   csurf({
+  //     cookie: {
+  //       httpOnly: true
+  //     }
+  //   })
+  // );
+
+  // app.get('/csrf-token', (req, res) => {
+  //   res.cookie('XSRF-TOKEN', req.csrfToken());
+  //   return res.send();
+  // });
 }
 
 // Routes
