@@ -1,16 +1,18 @@
 import { Container } from '@material-ui/core';
 import React from 'react';
-// import { useState } from 'react';
+import { useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import RegisterForm from '../components/register/RegisterForm';
+import RegisterForm, {
+  RegisterInputs
+} from '../components/register/RegisterForm';
 import Layout from '../components/shared/Layout';
 import useLoggedIn from '../hooks/useLoggedIn';
 
 const RegisterPage: React.FC = () => {
-  // const [inputs, setInputs] = useState<LoginInputs>({
-  //   username: '',
-  //   password: ''
-  // });
+  const [inputs, setInputs] = useState<RegisterInputs>({
+    username: '',
+    password: ''
+  });
 
   const loggedIn = useLoggedIn();
 
@@ -21,7 +23,7 @@ const RegisterPage: React.FC = () => {
   return (
     <Layout>
       <Container maxWidth="sm">
-        <RegisterForm />
+        <RegisterForm setInputsCallback={setInputs} />
       </Container>
     </Layout>
   );
