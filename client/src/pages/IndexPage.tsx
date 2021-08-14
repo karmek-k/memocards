@@ -17,7 +17,12 @@ const useStyles = makeStyles({
   button: {
     borderRadius: 87,
     padding: '1.5rem 5rem',
-    marginTop: '3rem'
+    margin: '0 1.5rem'
+  },
+  buttonContainer: {
+    marginTop: '3rem',
+    display: 'flex',
+    flexDirection: 'row'
   }
 });
 
@@ -34,16 +39,27 @@ const IndexPage = () => {
           Vel mollitia perspiciatis neque eaque commodi qui. Voluptas nihil ad
           maiores. Animi quisquam in iste sit debitis at.
         </Typography>
-        <Button
-          size="large"
-          variant="contained"
-          color="primary"
-          component={Link}
-          to="/login"
-          className={classes.button}
-        >
-          Get started
-        </Button>
+        <div className={classes.buttonContainer}>
+          <Button
+            size="large"
+            variant="contained"
+            color="primary"
+            component={Link}
+            to="/register"
+            className={classes.button}
+          >
+            Get started
+          </Button>
+          <Button
+            size="large"
+            variant="outlined"
+            component={Link}
+            to="/login"
+            className={classes.button}
+          >
+            Log in
+          </Button>
+        </div>
       </Container>
     </Layout>
   );
