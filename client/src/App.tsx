@@ -4,13 +4,13 @@ import IndexPage from './pages/IndexPage';
 import NotFoundPage from './pages/NotFoundPage';
 import './styles/global.css';
 import LoginPage from './pages/LoginPage';
-import useCsrfToken from './hooks/useCsrfToken';
+// import useCsrfToken from './hooks/useCsrfToken';
 import ProtectedRoute from './components/router/ProtectedRoute';
 import DashboardPage from './pages/DashboardPage';
 import DeckOverviewPage from './pages/DeckOverviewPage';
 
 function App() {
-  useCsrfToken();
+  // useCsrfToken();
 
   return (
     <BrowserRouter>
@@ -21,6 +21,7 @@ function App() {
         <ProtectedRoute path="/deck/:deckId" component={DeckOverviewPage} />
         <Route component={NotFoundPage} />
       </Switch>
+      <p>TODO: Bring back CSRF protection before deploying</p>
     </BrowserRouter>
   );
 }

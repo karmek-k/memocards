@@ -1,8 +1,8 @@
 import { useQuery } from 'react-query';
-import axios from 'axios';
+import api from '../functions/api';
 
 const getCsrfToken = async () => {
-  await axios.get<void>('/csrf-token');
+  await api.get<void>('/csrf-token');
 };
 
 const useCsrfToken = () => {
