@@ -1,5 +1,4 @@
 import {
-  makeStyles,
   Paper,
   Typography,
   TextField,
@@ -10,23 +9,7 @@ import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { userSchema } from '../../schemas/user';
-
-const useStyles = makeStyles({
-  paper: {
-    padding: '2rem'
-  },
-  centerText: {
-    textAlign: 'center'
-  },
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between'
-  },
-  marginTop: {
-    marginTop: '1.5rem'
-  }
-});
+import useStyles from '../shared/styles/form';
 
 export interface LoginInputs {
   username: string;
