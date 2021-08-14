@@ -8,7 +8,7 @@ import {
   Link
 } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { userSchema } from '../../schemas/user';
 import useStyles from '../shared/styles/form';
 
@@ -19,6 +19,8 @@ export interface RegisterInputs {
 
 interface Props {
   setInputsCallback: React.Dispatch<React.SetStateAction<RegisterInputs>>;
+  registering: boolean;
+  error: boolean;
 }
 
 const RegisterForm: React.FC<Props> = props => {
@@ -31,21 +33,24 @@ const RegisterForm: React.FC<Props> = props => {
     resolver: yupResolver(userSchema)
   });
 
+  const onSubmit: SubmitHandler<RegisterInputs> = props.setInputsCallback;
+
   return (
     <Paper className={classes.paper}>
       <Typography variant="h2" className={classes.centerText}>
         Register
       </Typography>
-      {/* {props.error && (
+      {props.error && (
         <Typography
           variant="body1"
           color="error"
           className={classes.centerText}
         >
-          There was an error while logging in. Please check your credentials.
+          There was an error while registering. Please pick a different
+          username.
         </Typography>
-      )} */}
-      <form className={classes.form} onSubmit={handleSubmit(console.log)}>
+      )}
+      <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
         <TextField
           label="Username"
           error={!!errors.username}
@@ -63,7 +68,7 @@ const RegisterForm: React.FC<Props> = props => {
           variant="contained"
           color="primary"
           type="submit"
-          // disabled={props.loggingIn}
+          disabled={props.registering}
           className={classes.marginTop}
         >
           Submit
@@ -75,7 +80,7 @@ const RegisterForm: React.FC<Props> = props => {
           Log in instead.
         </Link>
       </Typography>
-      {/* {props.loggingIn && <LinearProgress className={classes.marginTop} />} */}
+      {props.registering && <LinearProgress className={classes.marginTop} />}
     </Paper>
   );
 };
