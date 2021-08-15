@@ -4,6 +4,7 @@ import auth from '../middleware/auth';
 import fetchDeck from '../middleware/fetchDeck';
 import { Deck } from '../models/Deck';
 import { User } from '../models/User';
+import { randomSubset } from '../utils/random';
 import validate from '../validation/middleware';
 import { deckValidator } from '../validation/validators';
 
@@ -46,6 +47,19 @@ router.get('/:id/cards', auth, async (req, res) => {
   }
 
   return res.send(deck.cards);
+});
+
+router.get('/:deckId/review', auth, fetchDeck('cards'), async (req, res) => {
+  const deck = res.locals.deck as Deck;
+
+  const cardCount = deck.cards.length;
+  let reviewCount = Number(req.query.count ?? cardCount);
+
+  if (reviewCount <= 0 || reviewCount > cardCount) {
+    return res.status(400).send();
+  }
+
+  return res.send({ cards: randomSubset(deck.cards, reviewCount) });
 });
 
 export default router;
