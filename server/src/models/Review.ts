@@ -2,8 +2,10 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn
 } from 'typeorm';
+import { Answer } from './Answer';
 import { Deck } from './Deck';
 
 @Entity()
@@ -16,4 +18,7 @@ export class Review {
 
   @CreateDateColumn()
   date!: Date;
+
+  @OneToMany(() => Answer, answer => answer.review)
+  answers!: Answer[];
 }
