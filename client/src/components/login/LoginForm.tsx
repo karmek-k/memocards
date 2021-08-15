@@ -10,7 +10,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { userSchema } from '../../schemas/user';
+import { loginSchema } from '../../schemas/user';
 import useStyles from '../shared/styles/form';
 
 export interface LoginInputs {
@@ -31,7 +31,7 @@ const LoginForm: React.FC<Props> = props => {
     register,
     formState: { errors }
   } = useForm<LoginInputs>({
-    resolver: yupResolver(userSchema)
+    resolver: yupResolver(loginSchema)
   });
 
   const onSubmit: SubmitHandler<LoginInputs> = props.setInputsCallback;

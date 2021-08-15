@@ -1,6 +1,15 @@
 import * as yup from 'yup';
 
-export const userSchema = yup.object().shape({
+const loginSchemaShape = {
   username: yup.string().required().min(3).max(20),
   password: yup.string().required().min(5).max(100)
-});
+};
+
+export const loginSchema = yup.object().shape(loginSchemaShape);
+
+const registerSchemaShape = {
+  ...loginSchemaShape,
+  passwordConfirmation: yup.string().oneOf([yup.ref('password')])
+};
+
+export const registerSchema = yup.object().shape(registerSchemaShape);
