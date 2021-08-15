@@ -37,16 +37,8 @@ router.post('/', auth, validate(deckValidator), async (req, res) => {
   return res.status(201).send(deck);
 });
 
-router.get('/:id/cards', auth, async (req, res) => {
-  const deck = await getRepository(Deck).findOne(req.params.id, {
-    relations: ['cards']
-  });
-
-  if (!deck) {
-    return res.status(404).send();
-  }
-
-  return res.send(deck.cards);
+router.get('/:deckId/cards', auth, fetchDeck('cards'), async (req, res) => {
+  return res.send(res.locals.deck.cards);
 });
 
 router.get('/:deckId/review', auth, fetchDeck('cards'), async (req, res) => {
