@@ -13,7 +13,8 @@ import useRegister from '../hooks/useRegister';
 const RegisterPage: React.FC = () => {
   const [inputs, setInputs] = useState<RegisterInputs>({
     username: '',
-    password: ''
+    password: '',
+    passwordConfirmation: ''
   });
 
   const loggedIn = useLoggedIn();

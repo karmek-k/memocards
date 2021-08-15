@@ -9,12 +9,13 @@ import {
 } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { userSchema } from '../../schemas/user';
+import { registerSchema } from '../../schemas/user';
 import useStyles from '../shared/styles/form';
 
 export interface RegisterInputs {
   username: string;
   password: string;
+  passwordConfirmation: string;
 }
 
 interface Props {
@@ -30,7 +31,7 @@ const RegisterForm: React.FC<Props> = props => {
     register,
     formState: { errors }
   } = useForm<RegisterInputs>({
-    resolver: yupResolver(userSchema)
+    resolver: yupResolver(registerSchema)
   });
 
   const onSubmit: SubmitHandler<RegisterInputs> = props.setInputsCallback;
@@ -63,6 +64,13 @@ const RegisterForm: React.FC<Props> = props => {
           label="Password"
           helperText={errors.password?.message}
           {...register('password')}
+        />
+        <TextField
+          type="password"
+          error={!!errors.passwordConfirmation}
+          label="Confirm password"
+          helperText={errors.passwordConfirmation?.message}
+          {...register('passwordConfirmation')}
         />
         <Button
           variant="contained"

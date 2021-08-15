@@ -9,7 +9,9 @@ export const loginSchema = yup.object().shape(loginSchemaShape);
 
 const registerSchemaShape = {
   ...loginSchemaShape,
-  passwordConfirmation: yup.string().oneOf([yup.ref('password')])
+  passwordConfirmation: yup
+    .string()
+    .oneOf([yup.ref('password')], 'passwords do not match')
 };
 
 export const registerSchema = yup.object().shape(registerSchemaShape);
