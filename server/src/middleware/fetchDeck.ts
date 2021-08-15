@@ -3,9 +3,11 @@ import { getRepository } from 'typeorm';
 import { Deck } from '../models/Deck';
 import { User } from '../models/User';
 
-function fetchDeck(...relations: string[]) {
+type DeckIdSource = 'params' | 'query';
+
+function fetchDeck(from: DeckIdSource = 'params', ...relations: string[]) {
   return async (req: any, res: any, next: NextFunction) => {
-    let deck = await getRepository(Deck).findOne(req.params.deckId, {
+    let deck = await getRepository(Deck).findOne(req[from].deckId, {
       relations: ['author', ...relations]
     });
 

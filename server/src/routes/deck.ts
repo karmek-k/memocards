@@ -37,21 +37,31 @@ router.post('/', auth, validate(deckValidator), async (req, res) => {
   return res.status(201).send(deck);
 });
 
-router.get('/:deckId/cards', auth, fetchDeck('cards'), async (req, res) => {
-  return res.send(res.locals.deck.cards);
-});
-
-router.get('/:deckId/review', auth, fetchDeck('cards'), async (req, res) => {
-  const deck = res.locals.deck as Deck;
-
-  const cardCount = deck.cards.length;
-  let reviewCount = Number(req.query.count ?? cardCount);
-
-  if (reviewCount <= 0 || reviewCount > cardCount) {
-    return res.status(400).send();
+router.get(
+  '/:deckId/cards',
+  auth,
+  fetchDeck('params', 'cards'),
+  async (req, res) => {
+    return res.send(res.locals.deck.cards);
   }
+);
 
-  return res.send({ cards: randomSubset(deck.cards, reviewCount) });
-});
+router.get(
+  '/:deckId/review',
+  auth,
+  fetchDeck('params', 'cards'),
+  async (req, res) => {
+    const deck = res.locals.deck as Deck;
+
+    const cardCount = deck.cards.length;
+    let reviewCount = Number(req.query.count ?? cardCount);
+
+    if (reviewCount <= 0 || reviewCount > cardCount) {
+      return res.status(400).send();
+    }
+
+    return res.send({ cards: randomSubset(deck.cards, reviewCount) });
+  }
+);
 
 export default router;
