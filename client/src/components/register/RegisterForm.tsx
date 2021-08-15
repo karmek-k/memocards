@@ -1,45 +1,45 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import {
-  Paper,
-  Typography,
-  TextField,
   Button,
   LinearProgress,
+  Paper,
+  TextField,
+  Typography,
   Link
 } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
-import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { loginSchema } from '../../schemas/user';
+import { registerSchema } from '../../schemas/user';
 import useStyles from '../shared/styles/form';
 
-export interface LoginInputs {
+export interface RegisterInputs {
   username: string;
   password: string;
+  passwordConfirmation: string;
 }
 
 interface Props {
-  setInputsCallback: React.Dispatch<React.SetStateAction<LoginInputs>>;
-  loggingIn: boolean;
+  setInputsCallback: React.Dispatch<React.SetStateAction<RegisterInputs>>;
+  registering: boolean;
   error: boolean;
 }
 
-const LoginForm: React.FC<Props> = props => {
+const RegisterForm: React.FC<Props> = props => {
   const classes = useStyles();
   const {
     handleSubmit,
     register,
     formState: { errors }
-  } = useForm<LoginInputs>({
-    resolver: yupResolver(loginSchema)
+  } = useForm<RegisterInputs>({
+    resolver: yupResolver(registerSchema)
   });
 
-  const onSubmit: SubmitHandler<LoginInputs> = props.setInputsCallback;
+  const onSubmit: SubmitHandler<RegisterInputs> = props.setInputsCallback;
 
   return (
     <Paper className={classes.paper}>
       <Typography variant="h2" className={classes.centerText}>
-        Log in
+        Register
       </Typography>
       {props.error && (
         <Typography
@@ -47,7 +47,8 @@ const LoginForm: React.FC<Props> = props => {
           color="error"
           className={classes.centerText}
         >
-          There was an error while logging in. Please check your credentials.
+          There was an error while registering. Please pick a different
+          username.
         </Typography>
       )}
       <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
@@ -64,25 +65,32 @@ const LoginForm: React.FC<Props> = props => {
           helperText={errors.password?.message}
           {...register('password')}
         />
+        <TextField
+          type="password"
+          error={!!errors.passwordConfirmation}
+          label="Confirm password"
+          helperText={errors.passwordConfirmation?.message}
+          {...register('passwordConfirmation')}
+        />
         <Button
           variant="contained"
           color="primary"
           type="submit"
-          disabled={props.loggingIn}
+          disabled={props.registering}
           className={classes.marginTop}
         >
           Submit
         </Button>
       </form>
       <Typography className={classes.centerText + ' ' + classes.marginTop}>
-        Don't have an account?{' '}
-        <Link component={RouterLink} to="/register">
-          Click here to register.
+        Already have an account?{' '}
+        <Link component={RouterLink} to="/login">
+          Log in instead.
         </Link>
       </Typography>
-      {props.loggingIn && <LinearProgress className={classes.marginTop} />}
+      {props.registering && <LinearProgress className={classes.marginTop} />}
     </Paper>
   );
 };
 
-export default LoginForm;
+export default RegisterForm;

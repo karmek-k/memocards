@@ -8,6 +8,7 @@ import LoginPage from './pages/LoginPage';
 import ProtectedRoute from './components/router/ProtectedRoute';
 import DashboardPage from './pages/DashboardPage';
 import DeckOverviewPage from './pages/DeckOverviewPage';
+import RegisterPage from './pages/RegisterPage';
 
 function App() {
   // useCsrfToken();
@@ -17,6 +18,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={IndexPage} />
         <Route path="/login" component={LoginPage} />
+        <Route path="/register" component={RegisterPage} />
         <ProtectedRoute path="/dashboard" component={DashboardPage} />
         <ProtectedRoute path="/deck/:deckId" component={DeckOverviewPage} />
         <Route component={NotFoundPage} />
