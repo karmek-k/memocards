@@ -3,26 +3,28 @@ import { getRepository } from 'typeorm';
 import { Deck } from '../models/Deck';
 import { User } from '../models/User';
 
-async function fetchDeck(req: any, res: any, next: NextFunction) {
-  let deck = await getRepository(Deck).findOne(req.params.id, {
-    relations: ['author']
-  });
+function fetchDeck(...relations: string[]) {
+  return async (req: any, res: any, next: NextFunction) => {
+    let deck = await getRepository(Deck).findOne(req.params.id, {
+      relations: ['author', ...relations]
+    });
 
-  if (!deck) {
-    return res.status(404).send();
-  }
+    if (!deck) {
+      return res.status(404).send();
+    }
 
-  let notYours = true;
-  if (req.user) {
-    notYours = (req.user as User).id !== deck.author.id;
-  }
+    let notYours = true;
+    if (req.user) {
+      notYours = (req.user as User).id !== deck.author.id;
+    }
 
-  if (deck.private && notYours) {
-    return res.status(403).send();
-  }
+    if (deck.private && notYours) {
+      return res.status(403).send();
+    }
 
-  res.locals.deck = deck;
-  next();
+    res.locals.deck = deck;
+    next();
+  };
 }
 
 export default fetchDeck;

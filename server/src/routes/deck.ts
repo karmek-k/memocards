@@ -9,7 +9,7 @@ import { deckValidator } from '../validation/validators';
 
 const router = Router();
 
-router.get('/:deckId', fetchDeck, async (req, res) => {
+router.get('/:deckId', fetchDeck(), async (req, res) => {
   return res.send(res.locals.deck);
 });
 
