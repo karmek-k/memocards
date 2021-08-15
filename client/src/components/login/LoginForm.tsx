@@ -3,8 +3,10 @@ import {
   Typography,
   TextField,
   Button,
-  LinearProgress
+  LinearProgress,
+  Link
 } from '@material-ui/core';
+import { Link as RouterLink } from 'react-router-dom';
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -72,6 +74,12 @@ const LoginForm: React.FC<Props> = props => {
           Submit
         </Button>
       </form>
+      <Typography className={classes.centerText + ' ' + classes.marginTop}>
+        Don't have an account?{' '}
+        <Link component={RouterLink} to="/register">
+          Click here to register.
+        </Link>
+      </Typography>
       {props.loggingIn && <LinearProgress className={classes.marginTop} />}
     </Paper>
   );
