@@ -12,6 +12,7 @@ import cookieParser from 'cookie-parser';
 import UserRouter from './routes/user';
 import DeckRouter from './routes/deck';
 import CardRouter from './routes/card';
+import ReviewRouter from './routes/review';
 import helmet from 'helmet';
 import cors from 'cors';
 
@@ -54,5 +55,6 @@ if (process.env.NODE_ENV !== 'test') {
 app.use('/user', UserRouter);
 app.use('/deck', DeckRouter);
 app.use('/card', CardRouter);
+app.use('/review', ReviewRouter);
 
 export default app;
