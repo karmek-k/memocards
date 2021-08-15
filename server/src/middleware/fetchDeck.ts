@@ -5,7 +5,7 @@ import { User } from '../models/User';
 
 function fetchDeck(...relations: string[]) {
   return async (req: any, res: any, next: NextFunction) => {
-    let deck = await getRepository(Deck).findOne(req.params.id, {
+    let deck = await getRepository(Deck).findOne(req.params.deckId, {
       relations: ['author', ...relations]
     });
 
