@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn
 } from 'typeorm';
 import { Deck } from './Deck';
+import { Review } from './Review';
 
 @Entity()
 export class User {
@@ -21,4 +22,7 @@ export class User {
   @OneToMany(() => Deck, deck => deck.author)
   @JoinTable()
   decks!: Deck[];
+
+  @OneToMany(() => Review, review => review.user)
+  reviews!: Review[];
 }
