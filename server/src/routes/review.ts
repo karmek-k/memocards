@@ -82,4 +82,21 @@ router.get('/', auth, async (req, res) => {
   return res.send({ reviews: user?.reviews ?? [] });
 });
 
+router.get('/:reviewId', auth, async (req, res) => {
+  const review = await getRepository(Review).findOne(req.params.reviewId, {
+    relations: ['deck', 'user']
+  });
+  const { id: userId } = req.user! as User;
+
+  if (!review) {
+    return res.status(404).send();
+  }
+
+  if (review.user.id !== userId) {
+    return res.status(403).send();
+  }
+
+  return res.send({ review });
+});
+
 export default router;
