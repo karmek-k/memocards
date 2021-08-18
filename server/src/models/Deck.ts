@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn
 } from 'typeorm';
 import { Card } from './Card';
+import { Review } from './Review';
 import { User } from './User';
 
 @Entity()
@@ -27,4 +28,7 @@ export class Deck {
 
   @Column({ default: true })
   private!: boolean;
+
+  @OneToMany(() => Review, review => review.deck)
+  reviews!: Review[];
 }
