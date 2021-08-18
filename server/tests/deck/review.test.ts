@@ -10,7 +10,7 @@ async function addCard(
   back: string
 ) {
   await request(app)
-    .get('/card')
+    .post('/card')
     .auth(jwt, { type: 'bearer' })
     .send({ deckId, front, back });
 }
