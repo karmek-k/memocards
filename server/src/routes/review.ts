@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getRepository } from 'typeorm';
+import { getRepository, Repository } from 'typeorm';
 import auth from '../middleware/auth';
 import fetchDeck from '../middleware/fetchDeck';
 import { Answer } from '../models/Answer';
@@ -10,19 +10,13 @@ import { User } from '../models/User';
 
 const router = Router();
 
-router.post('/', auth, fetchDeck('query'), async (req, res) => {
-  const deck = res.locals.deck as Deck;
-  const cardRepo = getRepository(Card);
-  const { answers } = req.body;
-
-  const { id: userId } = req.user! as User;
-  const user = (await getRepository(User).findOne(userId)) as User;
-
-  if (!answers || answers.length === 0) {
-    return res.status(400).send();
-  }
-
+async function generateReview(
+  req: any,
+  res: any,
+  cardRepo: Repository<Card>
+): Promise<Card[]> {
   const cards: Card[] = [];
+
   for (const cardId of req.body) {
     let card;
 
@@ -38,6 +32,22 @@ router.post('/', auth, fetchDeck('query'), async (req, res) => {
 
     cards.push(card);
   }
+
+  return cards;
+}
+
+router.post('/', auth, fetchDeck('query'), async (req, res) => {
+  const deck = res.locals.deck as Deck;
+  const { answers } = req.body;
+
+  const { id: userId } = req.user! as User;
+  const user = (await getRepository(User).findOne(userId)) as User;
+
+  if (!answers || answers.length === 0) {
+    return res.status(400).send();
+  }
+
+  const cards = await generateReview(req, res, getRepository(Card));
 
   const review = new Review();
   review.deck = deck;
