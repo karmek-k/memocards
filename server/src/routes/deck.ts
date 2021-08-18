@@ -54,7 +54,12 @@ router.get(
     const deck = res.locals.deck as Deck;
 
     const cardCount = deck.cards.length;
-    let reviewCount = Number(req.query.count ?? cardCount);
+
+    if (cardCount === 0) {
+      return res.send({ cards: null });
+    }
+
+    const reviewCount = Number(req.query.count ?? cardCount);
 
     if (reviewCount <= 0 || reviewCount > cardCount) {
       return res.status(400).send();
