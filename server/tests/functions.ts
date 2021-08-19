@@ -1,3 +1,4 @@
+import request from 'supertest';
 import { createConnection, getConnection } from 'typeorm';
 import { User } from '../src/models/User';
 import { Deck } from '../src/models/Deck';
@@ -18,4 +19,17 @@ export async function beforeEachHandler() {
 
 export async function afterEachHandler() {
   await getConnection().close();
+}
+
+export async function addCard(
+  app: Express.Application,
+  jwt: string,
+  deckId: number,
+  front: string,
+  back: string
+) {
+  await request(app)
+    .post('/card')
+    .auth(jwt, { type: 'bearer' })
+    .send({ deckId, front, back });
 }

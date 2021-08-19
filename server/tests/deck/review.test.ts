@@ -1,19 +1,7 @@
 import request from 'supertest';
 import { Deck } from '../../src/models/Deck';
 import app from '../../src/server';
-import { afterEachHandler, beforeEachHandler } from '../functions';
-
-async function addCard(
-  jwt: string,
-  deckId: number,
-  front: string,
-  back: string
-) {
-  await request(app)
-    .post('/card')
-    .auth(jwt, { type: 'bearer' })
-    .send({ deckId, front, back });
-}
+import { addCard, afterEachHandler, beforeEachHandler } from '../functions';
 
 describe('Deck review tests', () => {
   let jwt: string;
@@ -38,9 +26,9 @@ describe('Deck review tests', () => {
 
     // add some cards
     allCardCount = 3;
-    await addCard(jwt, deck.id, 'テスト', 'test');
-    await addCard(jwt, deck.id, 'テキスト', 'text');
-    await addCard(jwt, deck.id, 'ミルク', 'milk');
+    await addCard(app, jwt, deck.id, 'テスト', 'test');
+    await addCard(app, jwt, deck.id, 'テキスト', 'text');
+    await addCard(app, jwt, deck.id, 'ミルク', 'milk');
   });
 
   afterEach(afterEachHandler);
