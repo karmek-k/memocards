@@ -57,4 +57,22 @@ describe('Review check tests', () => {
     expect(res.statusCode).toBe(201);
     expect(res.body.answerCount.correct).toBe(answers.length);
   });
+
+  it('should return 400 for an empty deck', async () => {
+    const res = await request(app)
+      .post('/review')
+      .auth(jwt, { type: 'bearer' })
+      .send({ answers: [] });
+
+    expect(res.statusCode).toBe(400);
+  });
+
+  it('should return 400 for undefined deck', async () => {
+    const res = await request(app)
+      .post('/review')
+      .auth(jwt, { type: 'bearer' })
+      .send();
+
+    expect(res.statusCode).toBe(400);
+  });
 });
