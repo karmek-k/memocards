@@ -63,4 +63,37 @@ describe('Review check tests', () => {
     expect(res.body).toHaveProperty('review');
     expect(res.body.review.id).toBe(1);
   });
+
+  it('should return 404 for a non-existent review', async () => {
+    const res = await request(app)
+      .get('/review/9999')
+      .auth(jwt, { type: 'bearer' })
+      .send();
+
+    expect(res.statusCode).toBe(404);
+  });
+
+  it("should return 403 for someone else's review", async () => {
+    const creds = {
+      username: 'developer',
+      password: '12345'
+    };
+
+    await request(app)
+      .post('/user')
+      .send({ ...creds });
+
+    const otherJwt = (
+      await request(app)
+        .post('/user/token')
+        .send({ ...creds })
+    ).body.token;
+
+    const res = await request(app)
+      .get('/review/1')
+      .auth(otherJwt, { type: 'bearer' })
+      .send();
+
+    expect(res.statusCode).toBe(403);
+  });
 });
