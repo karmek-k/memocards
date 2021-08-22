@@ -1,10 +1,12 @@
 import {
+  Button,
   CircularProgress,
   Container,
   makeStyles,
   Typography
 } from '@material-ui/core';
 import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import { useParams } from 'react-router';
 import Layout from '../components/shared/Layout';
 import useDeck from '../hooks/resources/useDeck';
@@ -40,6 +42,15 @@ const DeckOverviewPage: React.FC = () => {
         <Typography variant="subtitle1">
           Created by {deck.author?.username ?? 'Unknown User'}
         </Typography>
+        <Button
+          role="link"
+          color="primary"
+          variant="contained"
+          component={RouterLink}
+          to="/review"
+        >
+          Start review
+        </Button>
       </Container>
     </Layout>
   );

@@ -9,6 +9,7 @@ import ProtectedRoute from './components/router/ProtectedRoute';
 import DashboardPage from './pages/DashboardPage';
 import DeckOverviewPage from './pages/DeckOverviewPage';
 import RegisterPage from './pages/RegisterPage';
+import ReviewPage from './pages/ReviewPage';
 
 function App() {
   // useCsrfToken();
@@ -21,6 +22,7 @@ function App() {
         <Route path="/register" component={RegisterPage} />
         <ProtectedRoute path="/dashboard" component={DashboardPage} />
         <ProtectedRoute path="/deck/:deckId" component={DeckOverviewPage} />
+        <ProtectedRoute path="/review" component={ReviewPage} />
         <Route component={NotFoundPage} />
       </Switch>
       <p>TODO: Bring back CSRF protection before deploying</p>
